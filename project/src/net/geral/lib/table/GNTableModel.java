@@ -151,6 +151,10 @@ public abstract class GNTableModel<I> extends AbstractTableModel {
 
   protected abstract Object getValueFor(I obj, int columnIndex);
 
+  public int indexOf(final I entry) {
+    return list.indexOf(entry);
+  }
+
   @Override
   public synchronized boolean isCellEditable(final int rowIndex,
       final int columnIndex) {
@@ -159,6 +163,15 @@ public abstract class GNTableModel<I> extends AbstractTableModel {
       return false;
     }
     return canChange();
+  }
+
+  public synchronized void remove(final I entry) {
+    for (int i = 0; i < list.size(); i++) {
+      if (list.get(i) == entry) {
+        remove(i);
+        i--;
+      }
+    }
   }
 
   public synchronized void remove(final int index) {
