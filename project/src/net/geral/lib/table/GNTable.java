@@ -1,6 +1,7 @@
 package net.geral.lib.table;
 
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -11,6 +12,7 @@ import java.util.EventObject;
 import javax.swing.JComponent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
@@ -156,6 +158,14 @@ public abstract class GNTable<M extends GNTableModel<?>> extends JTable {
       return false;
     }
 
+    final Component c = getEditorComponent();
+    if (c instanceof JTextField) {
+      final String s = getDefaultEditingString(row, column);
+      if (s != null) {
+        ((JTextField) c).setText(s);
+      }
+    }
+
     editorSelectAll(e);
     return true;
   }
@@ -190,6 +200,10 @@ public abstract class GNTable<M extends GNTableModel<?>> extends JTable {
     }
   }
 
+  public String getDefaultEditingString(final int row, final int column) {
+    return null;
+  }
+
   @SuppressWarnings("unchecked")
   @Override
   public M getModel() {
@@ -218,6 +232,18 @@ public abstract class GNTable<M extends GNTableModel<?>> extends JTable {
     if (i != -1) {
       getModel().remove(i);
     }
+  }
+
+  public void scrollToSelected() {
+    final int n = getSelectedRow();
+    int c = getSelectedColumn();
+    if (c == -1) {
+      c = 0;
+    }
+    if (n == -1) {
+      return;
+    }
+    scrollRectToVisible(new Rectangle(getCellRect(n, c, true)));
   }
 
   @Override

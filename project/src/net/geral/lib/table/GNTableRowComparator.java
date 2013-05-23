@@ -19,6 +19,7 @@ public class GNTableRowComparator implements Comparator<Object> {
     this.table = table;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public int compare(final Object a, final Object b) {
     // if any is 'object' only, its a signal that is a new entry
@@ -51,6 +52,10 @@ public class GNTableRowComparator implements Comparator<Object> {
     // sort according to data ...
     if (a.getClass() == String.class) {
       return GNStrings.compare((String) a, (String) b);
+    }
+    // no sorter, use comparable
+    if (a instanceof Comparable<?>) {
+      return ((Comparable<Object>) a).compareTo(b);
     }
     // invalid type
     throw new IllegalArgumentException("Invalid sort for: " + a.getClass());
