@@ -107,11 +107,8 @@ public abstract class ConfigurationBase {
         throw new ConfigurationException("Invalid type (" + type + ") for: "
             + name);
       }
-    } catch (final NoSuchFieldException e) {
-      throw new ConfigurationException("Invalid parameter: " + name + " ("
-          + value + ")", e);
-    } catch (IllegalArgumentException | IllegalAccessException e) {
-      throw new ConfigurationException("Cannot set " + name + " to " + value, e);
+    } catch (final Exception e) {
+      e.printStackTrace();
     }
   }
 

@@ -220,6 +220,14 @@ public abstract class GNTable<M extends GNTableModel<?>> extends JTable {
     return scroll;
   }
 
+  public Object getSelected() {
+    final int r = getSelectedRow();
+    if (r == -1) {
+      return null;
+    }
+    return getModel().get(convertColumnIndexToModel(r));
+  }
+
   public void initialSort(final int columnIndex, final boolean reverse) {
     getRowSorter().toggleSortOrder(columnIndex);
     if (reverse) {

@@ -47,6 +47,6 @@ public abstract class GNStrings {
     if (s == null) {
       return null;
     }
-    return s.replaceAll("^\\s+", "").replaceAll("\\s$", "");
+    return s.replaceAll("^\\s+", "").replaceAll("\\s+$", "");
   }
 }
