@@ -1,6 +1,5 @@
 package net.geral.gui.textfield.formula;
 
-import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -11,25 +10,26 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.EventListenerList;
 
 import net.geral.lib.strings.GNStrings;
+import net.geral.lib.textfieds.ErrorFieldSetter;
 
 public abstract class FormulaTextField<T> extends JTextField implements
     DocumentListener, FocusListener, Runnable {
   private static final long       serialVersionUID = 1L;
-  private static final Color      COLOR_ERROR      = new Color(255, 200, 200);
-  private final Color             colorOk;
 
   private String                  filter           = null;
   private boolean                 hasError         = false;
+  private boolean                 changeColor      = true;
 
   protected T                     value            = null;
   private final EventListenerList listeners        = new EventListenerList();
+  private ErrorFieldSetter        efs              = null;
 
   public FormulaTextField(final String filterRegex) {
     filter = filterRegex;
-    colorOk = getBackground();
     getDocument().addDocumentListener(this);
     addFocusListener(this);
     setHorizontalAlignment(TRAILING);
+    SwingUtilities.invokeLater(this);
   }
 
   public void addChangeListener(final FormulaTextFieldListener<T> l) {
@@ -66,7 +66,15 @@ public abstract class FormulaTextField<T> extends JTextField implements
 
   protected void checkColor() {
     hasError = !evaluate();
-    setBackground(hasError ? COLOR_ERROR : colorOk);
+    System.err.println(hasError);
+    efs().set(this, !hasError);
+  }
+
+  public ErrorFieldSetter efs() {
+    if (efs == null) {
+      efs = new ErrorFieldSetter();
+    }
+    return efs;
   }
 
   protected abstract boolean evaluate();
@@ -143,6 +151,14 @@ public abstract class FormulaTextField<T> extends JTextField implements
     valueChanged();
   }
 
+  public void setChangeColor(final boolean yn) {
+    changeColor = yn;
+  }
+
+  public void setErrorFieldSetter(final ErrorFieldSetter efs) {
+    this.efs = efs;
+  }
+
   @Deprecated
   @Override
   public final void setText(final String t) {
@@ -158,11 +174,9 @@ public abstract class FormulaTextField<T> extends JTextField implements
   protected abstract T stringToValue(String s, boolean nullAllowed);
 
   private void valueChanged() {
-    if (hasFocus()) {
-      applyFilter();
-      checkColor();
-      fireChanged();
-    }
+    applyFilter();
+    checkColor();
+    fireChanged();
   }
 
   protected abstract String valueToString(T v);
