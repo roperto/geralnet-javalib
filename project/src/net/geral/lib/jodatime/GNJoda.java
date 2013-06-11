@@ -1,4 +1,4 @@
-package net.geral.jodatime;
+package net.geral.lib.jodatime;
 
 import org.joda.time.IllegalFieldValueException;
 import org.joda.time.LocalDate;
@@ -8,27 +8,15 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 public class GNJoda {
-  public static final JodaTimeComparator Comparator = new JodaTimeComparator();
-
-  // TODO delete preformated, in Essomerie use translation file
-  @Deprecated
-  public static final DateTimeFormatter  DMA        = DateTimeFormat
-                                                        .forPattern("dd/MM/yyyy");
-  @Deprecated
-  public static final DateTimeFormatter  DMAHMS     = DateTimeFormat
-                                                        .forPattern("dd/MM/yyyy HH:mm:ss");
-
-  @Deprecated
-  public static LocalDate parseLocalDate(final String string) {
-    if (string == null) {
-      return null;
-    }
-    try {
-      return LocalDate.parse(string);
-    } catch (final IllegalFieldValueException e) {
-      return null;
-    }
-  }
+  public static final String            SQL_DATE_STRING     = "yyyy-MM-dd";
+  public static final String            SQL_TIME_STRING     = "HH:mm:ss";
+  public static final String            SQL_DATETIME_STRING = "yyyy-MM-dd HH:mm:ss.SSS";
+  public static final DateTimeFormatter SQL_DATE_FORMAT     = DateTimeFormat
+                                                                .forPattern(SQL_DATE_STRING);
+  public static final DateTimeFormatter SQL_TIME_FORMAT     = DateTimeFormat
+                                                                .forPattern(SQL_TIME_STRING);
+  public static final DateTimeFormatter SQL_DATETIME_FORMAT = DateTimeFormat
+                                                                .forPattern(SQL_DATETIME_STRING);
 
   public static LocalDate parseLocalDate(final String value,
       final DateTimeFormatter format) {
@@ -88,16 +76,51 @@ public class GNJoda {
     return parseLocalTime(value, DateTimeFormat.forPattern(format));
   }
 
-  public static LocalDateTime sqlLocalDateTime(final String sql) {
-    // TODO boolean that select: returns null or 'zero' if invalid
+  public static LocalDate sqlLocalDate(final String sql,
+      final boolean nullForException) {
     if (sql == null) {
       return null;
     }
     try {
-      // 01-02-2003 04:05:06 --> 01-02-2003T04:05:06
-      return LocalDateTime.parse(sql.replace(" ", "T"));
+      return LocalDate.parse(sql, SQL_DATE_FORMAT);
     } catch (final IllegalFieldValueException e) {
+      if (nullForException) {
+        return null;
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  public static LocalDateTime sqlLocalDateTime(final String sql,
+      final boolean nullForException) {
+    if (sql == null) {
       return null;
+    }
+    try {
+      return LocalDateTime.parse(sql, SQL_DATETIME_FORMAT);
+    } catch (final IllegalFieldValueException e) {
+      if (nullForException) {
+        return null;
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  public static LocalTime sqlLocalTime(final String sql,
+      final boolean nullForException) {
+    if (sql == null) {
+      return null;
+    }
+    try {
+      return LocalTime.parse(sql, SQL_TIME_FORMAT);
+    } catch (final IllegalFieldValueException e) {
+      if (nullForException) {
+        return null;
+      } else {
+        throw e;
+      }
     }
   }
 }

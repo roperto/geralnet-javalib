@@ -1,4 +1,4 @@
-package net.geral.configuration;
+package net.geral.lib.configuration;
 
 import java.awt.Color;
 import java.awt.Dimension;

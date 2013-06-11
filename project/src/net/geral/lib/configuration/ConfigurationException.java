@@ -1,4 +1,4 @@
-package net.geral.configuration;
+package net.geral.lib.configuration;
 
 public class ConfigurationException extends Exception {
 	public ConfigurationException(String message) {
