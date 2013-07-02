@@ -92,13 +92,13 @@ public class GNJoda {
     }
   }
 
-  public static LocalDateTime sqlLocalDateTime(final String sql,
+  public static LocalDateTime sqlLocalDateTime(final String datetime,
       final boolean nullForException) {
-    if (sql == null) {
+    if (datetime == null) {
       return null;
     }
     try {
-      return LocalDateTime.parse(sql, SQL_DATETIME_FORMAT);
+      return LocalDateTime.parse(datetime, SQL_DATETIME_FORMAT);
     } catch (final IllegalFieldValueException e) {
       if (nullForException) {
         return null;
