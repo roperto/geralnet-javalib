@@ -9,8 +9,8 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 
-import net.geral.lib.strings.GNStrings;
 import net.geral.lib.table.GNTableColumnWidth;
+import net.geral.lib.util.StringUtils;
 
 import org.apache.log4j.Logger;
 
@@ -32,7 +32,7 @@ public abstract class ConfigurationBase {
         }
         String line;
         while ((line = reader.readLine()) != null) {
-          line = GNStrings.trim(line);
+          line = StringUtils.trim(line);
           if (line.length() == 0) {
             if (verbose) {
               System.out.println("[verbose] Ignoring empty line.");
@@ -82,7 +82,7 @@ public abstract class ConfigurationBase {
   public void set(final String name, String value)
       throws ConfigurationException {
     try {
-      value = GNStrings.trim(value);
+      value = StringUtils.trim(value);
       final Field field = this.getClass().getDeclaredField(name);
       final String type = field.getType().toString();
       if ("".equals(type)) {

@@ -1,4 +1,4 @@
-package net.geral.plagiary;
+package net.geral.lib.plagiary;
 
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;

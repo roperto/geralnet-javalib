@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
-import net.geral.lib.strings.GNStrings;
+import net.geral.lib.util.StringUtils;
 
 import org.apache.log4j.Logger;
 
@@ -219,7 +219,7 @@ public abstract class GNTableModel<I> extends AbstractTableModel {
       previous = "";
     }
     if (aValue instanceof String) {
-      aValue = GNStrings.trim((String) aValue);
+      aValue = StringUtils.trim((String) aValue);
     }
     if (aValue.equals(previous)) {
       return;

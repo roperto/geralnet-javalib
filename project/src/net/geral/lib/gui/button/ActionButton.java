@@ -1,4 +1,4 @@
-package net.geral.gui.button;
+package net.geral.lib.gui.button;
 
 import java.awt.Dimension;
 import java.awt.KeyEventDispatcher;

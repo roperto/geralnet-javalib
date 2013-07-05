@@ -1,4 +1,4 @@
-package net.geral.gui.textfield.formula;
+package net.geral.lib.gui.textfield.formula;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -9,8 +9,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.EventListenerList;
 
-import net.geral.lib.strings.GNStrings;
 import net.geral.lib.textfieds.ErrorFieldSetter;
+import net.geral.lib.util.StringUtils;
 
 public abstract class FormulaTextField<T> extends JTextField implements
     DocumentListener, FocusListener, Runnable {
@@ -18,7 +18,6 @@ public abstract class FormulaTextField<T> extends JTextField implements
 
   private String                  filter           = null;
   private boolean                 hasError         = false;
-  private boolean                 changeColor      = true;
 
   protected T                     value            = null;
   private final EventListenerList listeners        = new EventListenerList();
@@ -111,7 +110,7 @@ public abstract class FormulaTextField<T> extends JTextField implements
   }
 
   public String[] getParts() {
-    final String t = GNStrings.trim(getText());
+    final String t = StringUtils.trim(getText());
     if (t.length() == 0) {
       return new String[0];
     }
@@ -149,10 +148,6 @@ public abstract class FormulaTextField<T> extends JTextField implements
   public void run() {
     // invokelater from document change
     valueChanged();
-  }
-
-  public void setChangeColor(final boolean yn) {
-    changeColor = yn;
   }
 
   public void setErrorFieldSetter(final ErrorFieldSetter efs) {

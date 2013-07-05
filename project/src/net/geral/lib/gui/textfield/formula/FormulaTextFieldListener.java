@@ -1,4 +1,4 @@
-package net.geral.gui.textfield.formula;
+package net.geral.lib.gui.textfield.formula;
 
 import java.util.EventListener;
 

@@ -32,9 +32,6 @@ public abstract class GNTable<M extends GNTableModel<?>> extends JTable {
                                                             ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                                                             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-  @Deprecated
-  public static final int              MAX_WIDTH        = 10000;                                                // FIXME
-
   protected final GNTableRowComparator defaultSorter    = new GNTableRowComparator(
                                                             this);
   private boolean                      initialized      = false;

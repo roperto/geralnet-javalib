@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
 
-import net.geral.lib.strings.GNStrings;
+import net.geral.lib.util.StringUtils;
 
 import org.apache.log4j.Logger;
 
@@ -51,7 +51,7 @@ public class GNTableRowComparator implements Comparator<Object> {
     }
     // sort according to data ...
     if (a.getClass() == String.class) {
-      return GNStrings.compare((String) a, (String) b);
+      return StringUtils.compare((String) a, (String) b);
     }
     // no sorter, use comparable
     if (a instanceof Comparable<?>) {

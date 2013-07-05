@@ -1,4 +1,4 @@
-package net.geral.gui.textfield.formula;
+package net.geral.lib.gui.textfield.formula;
 
 public class FormulaTextFieldException extends Exception {
 	private static final long	serialVersionUID	= 1L;
