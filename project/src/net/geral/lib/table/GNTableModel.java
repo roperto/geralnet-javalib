@@ -12,7 +12,7 @@ public abstract class GNTableModel<I> extends AbstractTableModel {
   private static final Logger logger           = Logger
                                                    .getLogger(GNTableModel.class);
   private static final long   serialVersionUID = 1L;
-  private ArrayList<I>        list             = new ArrayList<>();
+  private final ArrayList<I>  list             = new ArrayList<>();
 
   private final boolean       allowAdd;
   private final boolean       allowChange;
@@ -180,13 +180,11 @@ public abstract class GNTableModel<I> extends AbstractTableModel {
   }
 
   public synchronized void setData(final I[] data) {
-    if (data == null) {
-      list = new ArrayList<>();
-      return;
-    }
     list.clear();
-    for (final I t : data) {
-      list.add(t);
+    if (data != null) {
+      for (final I t : data) {
+        list.add(t);
+      }
     }
     fireTableDataChanged();
   }

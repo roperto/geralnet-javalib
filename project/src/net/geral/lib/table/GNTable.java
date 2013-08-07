@@ -95,7 +95,7 @@ public abstract class GNTable<M extends GNTableModel<?>> extends JTable {
         if ((getSelectedColumn() == getRemoveColumn())
             && getModel().canDelete()) {
           final int viewRow = getSelectedRow();
-          final int modelRow = convertColumnIndexToModel(viewRow);
+          final int modelRow = convertRowIndexToModel(viewRow);
           final boolean canRemove = getModel().canRemoveRow(modelRow);
           logger.debug("delete row clicked [view=" + viewRow + ";model="
               + modelRow + ";canRemove=" + canRemove + "]");
@@ -222,7 +222,7 @@ public abstract class GNTable<M extends GNTableModel<?>> extends JTable {
     if (r == -1) {
       return null;
     }
-    return getModel().get(convertColumnIndexToModel(r));
+    return getModel().get(convertRowIndexToModel(r));
   }
 
   public void initialSort(final int columnIndex, final boolean reverse) {
