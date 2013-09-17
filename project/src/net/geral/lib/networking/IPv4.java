@@ -54,6 +54,10 @@ public class IPv4 implements Serializable {
     return true;
   }
 
+  public byte[] getBytes() {
+    return ip.clone();
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
